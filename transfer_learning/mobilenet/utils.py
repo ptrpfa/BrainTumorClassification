@@ -8,6 +8,7 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import os
 import pickle
+from natsort import natsorted
 
 # Function to serialise an object into a pickle file
 def save_to_pickle(file_name, save_data, complete_path=True):
@@ -66,9 +67,9 @@ def preprocess_image(image_path, img_size):
     return processed_img
 
 # Function to predict the class of an image
-def predict_class(image_path, model, class_names, img_size):
+def predict_class(image_path, model, class_names, img_size, verbose_output=1):
     processed_img = preprocess_image(image_path, img_size)
-    predictions = model.predict(processed_img)
+    predictions = model.predict(processed_img, verbose=verbose_output)
     predicted_class_index = tf.argmax(predictions[0]).numpy()
     return class_names[predicted_class_index]
 

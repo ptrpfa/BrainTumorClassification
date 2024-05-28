@@ -2,3 +2,5 @@
 *.pyc
 **/.venv**
 **/__pycache__
+dataset/others
+dataset/full
