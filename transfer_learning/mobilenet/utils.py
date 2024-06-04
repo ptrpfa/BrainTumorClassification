@@ -52,7 +52,7 @@ def classifier_metrics(list_y, list_pred, print_results=False):
         print("Cohen's Kappa:", results['kappa'])                                  # Cohen's Kappa: Measures inter-rater agreement for categorical items    
         print("Hamming Loss:", results['hamming_loss_val'], end='\n\n')            # Hamming Loss: The fraction of labels that are incorrectly predicted
         print("Confusion Matrix:\n", results['cm'], end="\n\n")
-        print("Classification Report:\n", results['class_report'], end="\n\n\n")
+        print("Classification Report:\n", results['class_report'], end="\n\n")
         
     return results
 
@@ -86,3 +86,23 @@ def load_data(data_dir):
                 image_paths.append(img_path)
                 labels.append(label)
     return np.array(image_paths), np.array(labels), class_names
+
+# Function to define neural network's preprocessing layers
+def get_preprocessing_layers():
+    return tf.keras.Sequential([
+        # Data augmentation layers
+        tf.keras.layers.RandomFlip('horizontal'),
+        tf.keras.layers.RandomRotation(0.2),
+        tf.keras.layers.RandomZoom(0.2)
+    ])
+
+# Function to define neural network's base model for transfer learning
+def get_base_model(input_shape):
+    # Initialise
+    base_model = tf.keras.applications.MobileNetV3Small(input_shape=input_shape, include_top=False, weights='imagenet')
+    
+    # Freeze base model
+    base_model.trainable = False
+    
+    # Return base model
+    return base_model
