@@ -6,7 +6,6 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import os
-import pickle
 import cv2
 
 # Function to return the performance for a classifier

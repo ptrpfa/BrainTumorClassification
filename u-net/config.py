@@ -2,8 +2,7 @@
 
 # Folders
 MAIN_DATASET_FOLDER = "../dataset"
-# DATASET_FOLDER = f"{MAIN_DATASET_FOLDER}/new_dataset2.0"
-DATASET_FOLDER = f"{MAIN_DATASET_FOLDER}/dataset_1"
+DATASET_FOLDER = f"{MAIN_DATASET_FOLDER}/dataset_2"
 MODEL_FOLDER = "./models"
 
 # Files
