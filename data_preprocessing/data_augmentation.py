@@ -5,17 +5,16 @@ import numpy as np
 
 # Define the directories
 source_dir = "../dataset/dataset_1"
-target_dir = "../dataset/new_dataset"
+target_dir = "../dataset/new_dataset2.0"
 
 # Define image augmentation parameters
 datagen = ImageDataGenerator(
-    rotation_range=10,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    zoom_range=0.1,
-    horizontal_flip=True,
-    vertical_flip=True,
-    fill_mode='nearest'
+    rotation_range = 10,
+    width_shift_range = 0.05,
+    height_shift_range = 0.05,
+    horizontal_flip = True,
+    vertical_flip = True,
+    fill_mode = 'nearest'
 )
 
 # Function to perform augmentation and save images
@@ -38,21 +37,22 @@ def augment_and_save_image(image, target_dir, file_name_prefix):
         if i >= 3:
             break
 
-# Iterate through each subdirectory in source_dir
-for subdir in os.listdir(source_dir):
-    subdir_path = os.path.join(source_dir, subdir)
-    
-    if os.path.isdir(subdir_path):
-        # Create corresponding subdirectory in target_dir
-        target_subdir = os.path.join(target_dir, subdir)
-        os.makedirs(target_subdir, exist_ok=True)
+if __name__ == "__main__":
+    # Iterate through each subdirectory in source_dir
+    for subdir in os.listdir(source_dir):
+        subdir_path = os.path.join(source_dir, subdir)
         
-        # Iterate through images in the subdirectory
-        for file_name in os.listdir(subdir_path):
-            file_path = os.path.join(subdir_path, file_name)
-            if os.path.isfile(file_path) and file_name.endswith(".jpg"):
-                # Read the image
-                image = cv2.imread(file_path)
-                
-                # Perform data augmentation and save augmented images
-                augment_and_save_image(image, target_subdir, os.path.splitext(file_name)[0])
+        if os.path.isdir(subdir_path):
+            # Create corresponding subdirectory in target_dir
+            target_subdir = os.path.join(target_dir, subdir)
+            os.makedirs(target_subdir, exist_ok=True)
+            
+            # Iterate through images in the subdirectory
+            for file_name in os.listdir(subdir_path):
+                file_path = os.path.join(subdir_path, file_name)
+                if os.path.isfile(file_path) and file_name.endswith(".jpg"):
+                    # Read the image
+                    image = cv2.imread(file_path)
+                    
+                    # Perform data augmentation and save augmented images
+                    augment_and_save_image(image, target_subdir, os.path.splitext(file_name)[0])
