@@ -4,3 +4,4 @@
 **/__pycache__
 dataset/others
 dataset/full
+dataset/train_test_dataset
