@@ -1,6 +1,5 @@
 from config import *
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report, matthews_corrcoef, cohen_kappa_score, hamming_loss, mean_squared_error
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report, matthews_corrcoef, cohen_kappa_score, hamming_loss
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
@@ -42,7 +41,6 @@ def classifier_metrics(list_y, list_pred, print_results=False):
         "cm": confusion_matrix(list_y, list_pred),
         "class_report": classification_report(list_y, list_pred),
     }
-    
     if(print_results):
         print("Accuracy:", results['accuracy'])                                    # Model Accuracy: How often is the classifier correct
         print("Precision:", results['precision'])                                  # Model Precision: what percentage of positive tuples are labeled as such?
@@ -53,56 +51,14 @@ def classifier_metrics(list_y, list_pred, print_results=False):
         print("Hamming Loss:", results['hamming_loss_val'], end='\n\n')            # Hamming Loss: The fraction of labels that are incorrectly predicted
         print("Confusion Matrix:\n", results['cm'], end="\n\n")
         print("Classification Report:\n", results['class_report'], end="\n\n")
-        
     return results
 
-# Function to preprocess an image before feeding it to the model
-def preprocess_image(image_path, img_size):
-    img = keras.preprocessing.image.load_img(image_path, target_size=img_size)
-    img_array = keras.preprocessing.image.img_to_array(img)
-    img_array = tf.expand_dims(img_array, 0)  # Create a batch
-
-    # Preprocess the image (normalize pixel values)
-    processed_img = keras.applications.mobilenet_v3.preprocess_input(img_array)
-    return processed_img
-
-# Function to predict the class of an image
-def predict_class(image_path, model, class_names, img_size, verbose_output=1):
-    processed_img = preprocess_image(image_path, img_size)
-    predictions = model.predict(processed_img, verbose=verbose_output)
-    predicted_class_index = tf.argmax(predictions[0]).numpy()
-    return class_names[predicted_class_index]
-
-# Load images and labels
-def load_data(data_dir):
-    image_paths = []
+# Function to compute performance of model
+def get_model_metrics(dataset, model):
     labels = []
-    class_names = sorted(os.listdir(data_dir))
-    for label in class_names:
-        class_dir = os.path.join(data_dir, label)
-        if os.path.isdir(class_dir):
-            for img_name in os.listdir(class_dir):
-                img_path = os.path.join(class_dir, img_name)
-                image_paths.append(img_path)
-                labels.append(label)
-    return np.array(image_paths), np.array(labels), class_names
-
-# Function to define neural network's preprocessing layers
-def get_preprocessing_layers():
-    return tf.keras.Sequential([
-        # Data augmentation layers
-        tf.keras.layers.RandomFlip('horizontal'),
-        tf.keras.layers.RandomRotation(0.2),
-        tf.keras.layers.RandomZoom(0.2)
-    ])
-
-# Function to define neural network's base model for transfer learning
-def get_base_model(input_shape):
-    # Initialise
-    base_model = tf.keras.applications.MobileNetV3Small(input_shape=input_shape, include_top=False, weights='imagenet')
-    
-    # Freeze base model
-    base_model.trainable = False
-    
-    # Return base model
-    return base_model
+    predictions = []
+    for images, lbls in dataset:
+        preds = model.predict(images, verbose=0)
+        labels.extend(lbls.numpy())
+        predictions.extend(np.argmax(preds, axis=1))
+    classifier_metrics(labels, predictions, print_results=True)
