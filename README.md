@@ -62,4 +62,10 @@ README.md (this file)
     ```
     pip3 install -r requirements.txt
     ```
+
+    For macOS users with Apple Silicon, you can choose to install additional packages provided by [Apple](https://developer.apple.com/metal/tensorflow-plugin/) to utilise your device's GPU for enhanced model training. The consolidated project dependencies for such users is provided in the `mac_requirements.txt` file:
+    ```
+    pip3 install -r mac_requirements.txt
+    ```
+    **Note: tensorflow-metal is currently only supported for Python 3.8, 3.9 and 3.10*
 3. Run the interactive Python notebook to train/test the model, ensuring that you've linked the notebook to the correct Python `virtualenv`. 
