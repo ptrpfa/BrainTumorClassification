@@ -72,7 +72,7 @@ tornado==6.4
 traitlets==5.14.3
 typing_extensions==4.11.0
 tzdata==2024.1
-urllib3==2.2.1
+urllib3==2.2.2
 wcwidth==0.2.13
 Werkzeug==3.0.3
 wheel==0.43.0
