@@ -13,3 +13,5 @@ RANDOM_STATE = 123456
 
 IMAGE_SIZE = 224
 BATCH_SIZE = 32
+
+MODEL_FILE = "models/vgg19_model.keras"
