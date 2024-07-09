@@ -1,5 +1,6 @@
 hyperparameter-search
-best_model.weights.h5
+model_initial.weights.h5
+model_tuned.weights.h5
 best_hp.pkl
-logs
 models/vgg19_model.keras
+models/initial_vgg19_model.keras
