@@ -62,3 +62,12 @@ def get_model_metrics(dataset, model):
         labels.extend(lbls.numpy())
         predictions.extend(np.argmax(preds, axis=1))
     classifier_metrics(labels, predictions, print_results=True)
+
+# Calculate statistics
+def calculate_statistics(data):
+    return {
+        'max': np.max(data),
+        'min': np.min(data),
+        'median': np.median(data),
+        'mean': np.mean(data)
+    }

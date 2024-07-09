@@ -9,5 +9,5 @@ MODEL_FOLDER = "./models"
 MODEL_FILE = f"{MODEL_FOLDER}/efficientnet_model.keras"
 
 # Parameters
-TEST_SIZE = 0.3
+SPLIT_SIZE = 0.2
 RANDOM_STATE = 123456
