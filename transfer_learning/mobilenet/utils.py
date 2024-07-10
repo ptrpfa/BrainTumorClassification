@@ -1,5 +1,5 @@
 from config import *
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report, matthews_corrcoef, cohen_kappa_score, hamming_loss
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, accuracy_score, precision_score, recall_score, f1_score, classification_report, matthews_corrcoef, cohen_kappa_score, hamming_loss
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
@@ -28,7 +28,7 @@ def load_from_pickle(file_name, complete_path=True):
     return loaded_data
 
 # Function to return the performance for a classifier
-def classifier_metrics(list_y, list_pred, print_results=False):
+def classifier_metrics(list_y, list_pred, class_names, print_results=False):
     # Obtain metrics
     results = {
         "accuracy": accuracy_score(list_y, list_pred),
@@ -39,7 +39,7 @@ def classifier_metrics(list_y, list_pred, print_results=False):
         "kappa": cohen_kappa_score(list_y, list_pred),
         "hamming_loss_val": hamming_loss(list_y, list_pred),
         "cm": confusion_matrix(list_y, list_pred),
-        "class_report": classification_report(list_y, list_pred),
+        "class_report": classification_report(list_y, list_pred, target_names=class_names),
     }
     if(print_results):
         print("Accuracy:", results['accuracy'])                                    # Model Accuracy: How often is the classifier correct
@@ -50,18 +50,19 @@ def classifier_metrics(list_y, list_pred, print_results=False):
         print("Cohen's Kappa:", results['kappa'])                                  # Cohen's Kappa: Measures inter-rater agreement for categorical items    
         print("Hamming Loss:", results['hamming_loss_val'], end='\n\n')            # Hamming Loss: The fraction of labels that are incorrectly predicted
         print("Confusion Matrix:\n", results['cm'], end="\n\n")
+        ConfusionMatrixDisplay(results['cm'], display_labels=class_names).plot()
         print("Classification Report:\n", results['class_report'], end="\n\n")
     return results
 
 # Function to compute performance of model
-def get_model_metrics(dataset, model):
+def get_model_metrics(dataset, model, class_names):
     labels = []
     predictions = []
     for images, lbls in dataset:
         preds = model.predict(images, verbose=0)
         labels.extend(lbls.numpy())
         predictions.extend(np.argmax(preds, axis=1))
-    classifier_metrics(labels, predictions, print_results=True)
+    classifier_metrics(labels, predictions, class_names, print_results=True)
     
 # Calculate statistics
 def calculate_statistics(data):
