@@ -71,11 +71,14 @@ def classifier_metrics(list_y, list_pred, print_results=False):
     return results
 
 # Function to compute performance of model
-def get_model_metrics(dataset, model):
+def get_model_metrics(dataset, model, num_batches):
     labels = []
     predictions = []
-    for images, lbls in dataset:
+    for batch_index in range(num_batches):
+        images, lbls = next(dataset)
         preds = model.predict(images, verbose=0)
-        labels.extend(lbls.numpy())
+        labels.extend(lbls)
         predictions.extend(np.argmax(preds, axis=1))
-    classifier_metrics(labels, predictions, print_results=True)
+    
+    y_true = np.argmax(labels, axis=1)
+    classifier_metrics(y_true, predictions, print_results=True)
