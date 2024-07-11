@@ -1,8 +1,6 @@
 ### Table of Contents
 1. [Team](#team)
 2. [Overview](#overview)
-5. [Dataset](#dataset)
-2. [Methodology](#methodology)
 3. [Repository Structure](#repository-structure)
 4. [Program Usage](#program-usage)
 
@@ -18,36 +16,37 @@
 
 ### Overview
 ---
-???
+This project aims to address the challenge of brain cancer detection, through the multi-class classification of Magnetic Resonance Imaging (MRI) brain image scans using DL approaches. Brain MRI image scans will be classified into four distinct categories: glioma, meningioma, pituitary and no tumour,
 
-### Dataset
----
-???
+The primary objectives of this project are to understand the intricacies of detecting brain tumors from MRI scans, implement deep learning models using various approaches, and evaluate their performance rigorously. In particular, we evaluate four deep learning approaches consisting of nine models, as outlined below.
 
-### Methodology
----
-The following methodology was employed for data analysis of ???:
-1. Data Pre-processing and Preparation 
-    - Dataset Creation
-    - Preliminary Exploratory Data Analysis
-    - Feature Engineering
-        - Outlier Management
-        - Feature Creation
-        - Feature Reduction
-        - Feature Analysis
-        - Feature Selection
-        - Dataset Subsetting
-2. Data Mining
-    - Initial Data Mining
-    -  Hyper-parameter Fine-tuning
-3. Analysis
-    - Model Performance Comparison and Analysis
-
+1. Conditional Generative Adversarial Network (cGAN)
+2. U-Net
+3. Hybrid (Hybrid of CNN and RNN)
+4. Transfer Learning
+    - DenseNet-121
+    - MobileNetV2
+    - MobileNetV3
+    - EfficientNet
+    - Xception
+    - ResNet50V2
 
 ### Repository Structure
 ---
 ```
 requirements.txt
+
+mac_requirements.txt
+
+dataset/ (contains dataset files)
+
+gan/ (directory for cGAN source code)
+
+cnn-rnn-hybrid/ (directory for CNN-RNN Hybrid source code)
+
+u-net/ (directory for U-Net source code)
+
+transfer_learning (directory for transfer learning models' source code)
 
 README.md (this file)
 ```
@@ -63,9 +62,9 @@ README.md (this file)
     pip3 install -r requirements.txt
     ```
 
-    For macOS users with Apple Silicon, you can choose to install additional packages provided by [Apple](https://developer.apple.com/metal/tensorflow-plugin/) to utilise your device's GPU for enhanced model training. The consolidated project dependencies for such users is provided in the `mac_requirements.txt` file:
+    For macOS users with Apple Silicon, you may want to install additional packages provided by [Apple](https://developer.apple.com/metal/tensorflow-plugin/) to utilise your device's GPU for enhanced model training. The consolidated project dependencies for such users is provided in the `mac_requirements.txt` file:
     ```
     pip3 install -r mac_requirements.txt
     ```
     **Note: tensorflow-metal is currently only supported for Python 3.8, 3.9 and 3.10*
-3. Run the interactive Python notebook to train/test the model, ensuring that you've linked the notebook to the correct Python `virtualenv`. 
+3. Run the interactive Python notebook to train/test the model, ensuring that you've linked the notebook to the correct Python `virtualenv`. To avoid having to train models from scratch, you may choose to load the exported `.pkl` or `.keras` fine-tuned models in each model's respective directory.
